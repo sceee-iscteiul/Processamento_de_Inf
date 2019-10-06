@@ -132,11 +132,13 @@ public class ImageMatrixGUI extends Observable {
 
 		initImages();
 
-		new KeyWatcher().start();
+		//new KeyWatcher().start();
 
-		new MouseWatcher().start();
+		//new MouseWatcher().start();
 
     	new Ticker().start();
+    	
+    	new RainTicker().start();
 
 		frame.addKeyListener(new KeyListener() {
 
@@ -209,9 +211,9 @@ public class ImageMatrixGUI extends Observable {
 		mouseClicked = false;
 	}
 
-	  void tick() throws InterruptedException {
+	synchronized  void tick(int n) throws InterruptedException {
 		setChanged();
-		notifyObservers();
+		notifyObservers(n);
 	}
 
 	private void initImages() {
@@ -369,25 +371,25 @@ public class ImageMatrixGUI extends Observable {
 		}
 	}
 
-	private class KeyWatcher extends Thread {
-		public void run() {
-			try {
-				while (true)
-					waitForKey();
-			} catch (InterruptedException e) {
-			}
-		}
-	}
+//	private class KeyWatcher extends Thread {
+//		public void run() {
+//			try {
+//				while (true)
+//				waitForKey();
+//			} catch (InterruptedException e) {
+//			}
+//		}
+//	}
 
-	private class MouseWatcher extends Thread {
-		public void run() {
-			try {
-				while (true)
-					waitForClick();
-			} catch (InterruptedException e) {
-			}
-		}
-	}
+//	private class MouseWatcher extends Thread {
+//		public void run() {
+//			try {
+//				while (true)
+//					waitForClick();
+//			} catch (InterruptedException e) {
+//			}
+//		}
+//	}
 
 	private class Ticker extends Thread {
 		private static final long TICK_TIME = 5000;
@@ -396,7 +398,21 @@ public class ImageMatrixGUI extends Observable {
 			try {
 				while (true) {
 					sleep(TICK_TIME);
-					tick();
+					tick(1);
+				}
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	private class RainTicker extends Thread {
+		private static final long TICK_TIME = 500;
+
+		public void run() {
+			try {
+				while (true) {
+					sleep(TICK_TIME);
+					tick(2);
 				}
 			} catch (InterruptedException e) {
 			}

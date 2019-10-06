@@ -2,6 +2,7 @@ package Simulator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,7 +20,7 @@ public class Simulator implements Observer {
 	private List<FireSimulatorObject> objects = new ArrayList<FireSimulatorObject>();
 	
 	
-	public Simulator() {
+	private Simulator() {
 		INSTANCE=this;
 		ImageMatrixGUI.setSize(max_x, max_y);
 		load();
@@ -32,6 +33,13 @@ public class Simulator implements Observer {
 				
 			}
 		}
+		
+		for(int x = 0; x<max_x; x++) {
+			objects.add(new Land(new Point2D(x, max_y-1)));
+			objects.add(new Rain(new Point2D(x,0)));
+		}
+		
+		
 		for(FireSimulatorObject o:objects) {
 		ImageMatrixGUI.getInstance().addImage(o);
 		}
@@ -46,6 +54,12 @@ public class Simulator implements Observer {
 		return INSTANCE;	
 	}
 	
+	public void removeFireSimulatorObject(FireSimulatorObject o) {
+		objects.remove(o);
+		ImageMatrixGUI.getInstance().removeImage(o);
+		
+	}
+	
 	String geraTemperatura() {
 		double u = Math.random();
 		double t= 10*u+30;
@@ -53,12 +67,35 @@ public class Simulator implements Observer {
 		 return formatador.format(t);
 	}
 	
+	public Interactable getInteractableAt(Point2D p) {
+		for(FireSimulatorObject o : objects) {
+			if(o instanceof Interactable && o.getPosition().equals(p)) {
+			return ((Interactable)o);
+			}
+			
+		}
+		return null;
+	}
+	
+	public void updateFireSimulatorObject() {
+		List<Updatable> up = new ArrayList<>();
+		for(FireSimulatorObject o: objects) {;
+			if(o instanceof Updatable)
+				up.add((Updatable) o);
+		}
+		for(Updatable a : up)
+			a.update();
+	}
+	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		
+		if(((int)arg1) == 2) 
+			updateFireSimulatorObject();
+		else 
 		 ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
+		
 		 ImageMatrixGUI.getInstance().update();
 	}
 
