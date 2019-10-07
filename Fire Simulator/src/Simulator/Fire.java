@@ -1,5 +1,4 @@
-import Simulator.FireSimulatorObject;
-import Simulator.Updatable;
+package Simulator;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Fire extends FireSimulatorObject implements Updatable{
