@@ -40,6 +40,9 @@ public class Simulator implements Observer {
 		}
 		objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 objects.add(new Fire(new Point2D((int)(Math.random()*max_x),max_y-1)));
 		
 		
 		for(FireSimulatorObject o:objects) {
@@ -98,6 +101,7 @@ public class Simulator implements Observer {
 			updateFireSimulatorObject();
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 
 		}
 		else {
 		 ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
