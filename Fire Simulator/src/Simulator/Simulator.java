@@ -36,8 +36,10 @@ public class Simulator implements Observer {
 		
 		for(int x = 0; x<max_x; x++) {
 			objects.add(new Land(new Point2D(x, max_y-1)));
-			objects.add(new Rain(new Point2D(x,0)));
+			
 		}
+		objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		
 		
 		for(FireSimulatorObject o:objects) {
@@ -57,6 +59,7 @@ public class Simulator implements Observer {
 	public void removeFireSimulatorObject(FireSimulatorObject o) {
 		objects.remove(o);
 		ImageMatrixGUI.getInstance().removeImage(o);
+		
 		
 	}
 	
@@ -91,10 +94,16 @@ public class Simulator implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		if(((int)arg1) == 2) 
+		if(((int)arg1) == 2) {
 			updateFireSimulatorObject();
-		else 
+		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		}
+		else {
 		 ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
+		
+		}
+		
 		
 		 ImageMatrixGUI.getInstance().update();
 	}
