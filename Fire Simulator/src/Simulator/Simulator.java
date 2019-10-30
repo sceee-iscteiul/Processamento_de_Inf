@@ -18,7 +18,7 @@ public class Simulator implements Observer {
 	private static final int max_x=10;
 	private static final int max_y=10;
 	private List<FireSimulatorObject> objects = new ArrayList<FireSimulatorObject>();
-	
+	private static int time_controller= 0; //Control of tick 
 	
 	private Simulator() {
 		INSTANCE=this;
@@ -42,12 +42,13 @@ public class Simulator implements Observer {
 		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 objects.add(new Rain(new Point2D((int)(Math.random()*max_x),0)));
-		 objects.add(new Fire(new Point2D((int)(Math.random()*max_x),max_y-1)));
 		
 		
 		for(FireSimulatorObject o:objects) {
 		ImageMatrixGUI.getInstance().addImage(o);
 		}
+		
+		ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
 	}
 	
 	public void addFireSimulatorObject(FireSimulatorObject f) {
@@ -83,6 +84,7 @@ public class Simulator implements Observer {
 		return null;
 	}
 	
+	//Update fire Simulators Objects only updateble objects
 	public void updateFireSimulatorObject() {
 		List<Updatable> up = new ArrayList<>();
 		for(FireSimulatorObject o: objects) {;
@@ -96,20 +98,27 @@ public class Simulator implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		if(((int)arg1) == 2) {
-			updateFireSimulatorObject();
+		 time_controller++; 
+		//Actualizar os Objectos que actualizam em meio segundo
+		 updateFireSimulatorObject();
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		if(time_controller%20 ==0){
+			//actualiza variaveis aleatórias
+			System.out.println("actualiza variaveis aleatórias "+ time_controller);
+			ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
+			
+		} if(time_controller % 80 ==0) {
+			//codigo para actualizar estação do ano
+			System.out.println("codigo para actualizar estação do ano "+ time_controller);
+			 
 		 
 		}
-		else {
-		 ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
-		
-		}
-		
 		
 		 ImageMatrixGUI.getInstance().update();
+		if(time_controller > 80)
+			time_controller=0;
+		 
 	}
 
 	
