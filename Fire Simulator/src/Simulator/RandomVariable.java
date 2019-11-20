@@ -151,31 +151,116 @@ public class RandomVariable {
 		
 			
 	}
-
-
+	
+	// Precipitação Inverno
+	
+	public static String precipitacaoInverno() {
+		double U = Math.random();
+		if(U<0.2)
+			return format.format(0);
+		return format.format(1);
+	}
+	// Precipitação primavera
+	public static String precipitacaoPrimavera() {
+		double U = Math.random();
+		if(U <= 0.5)
+			return format.format(0);
+		return format.format(1);
+	}
+	
+	// Precipitação verão
+	public static String precipitacaoVerao() {
+		double U = Math.random();
+		if(U <= 0.8)
+			return format.format(0);
+		return format.format(1);
+	}
+	
+	// Precipitação Outono
+	public static String precipitacaoOutono() {
+		double U = Math.random();
+		if(U <= 0.4)
+			return format.format(0);
+		return format.format(1);
+	}
+	
+	
+	// Pluviosidade Inverno
+	
+	public static String pluviosidadeInverno() {
+		double U = Math.random();
+		if(U <= 0.1)
+			return format.format(4);
+		else if(U > 0.1 && U <=0.2)
+			return format.format(6);
+		else if(U > 0.2 && U <=0.4)
+			return format.format(8);
+		return format.format(10);
+	}
+	
+	
+	public static String pluviosidadePrimavera() {
+		double U = Math.random();
+		if(U <= 0.1)
+			return format.format(2);
+		else if(U > 0.1 && U <=0.6)
+			return format.format(4);
+		else if(U > 0.6 && U <=0.8)
+			return format.format(6);
+		else if(U > 0.8 && U <=0.9)
+			return format.format(8);
+		return format.format(10);
+	}
+	
+	public static String pluviosidadeVerao() {
+		double U = Math.random();
+		if(U <= 0.5)
+			return format.format(2);
+		else if(U > 0.5 && U <=0.8)
+			return format.format(4);
+		else if(U > 0.8 && U <=0.9)
+			return format.format(6);
+		else if(U > 0.9 && U <=0.97)
+			return format.format(8);
+		return format.format(10);
+	}
+	
+	public static String pluviosidadeOutono() {
+		double U = Math.random();
+		if(U <= 0.05)
+			return format.format(2);
+		else if(U > 0.05 && U <=0.35)
+			return format.format(4);
+		else if(U > 0.35 && U <=0.75)
+			return format.format(6);
+		else if(U > 0.75 && U <=0.95)
+			return format.format(8);
+		return format.format(10);
+	}
+	
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-		List<String> TI = new ArrayList<>();
-	  List<String> TP = new ArrayList<>();
-		List<String> TV = new ArrayList<>();
-		List<String> TO = new ArrayList<>();
+		List<String> PI = new ArrayList<>();
+	  List<String> PP = new ArrayList<>();
+		List<String> PV = new ArrayList<>();
+		List<String> PO = new ArrayList<>();
 		for(int i =0; i< 1000; i++) {
-			TI.add(temperaturaInverno());
-			TP.add(temperaturaPrimavera());
-			TV.add(temperaturaVerao());
-			TO.add(temperaturaOutono());
+			PI.add(pluviosidadeInverno());
+			PP.add(pluviosidadePrimavera());
+			PV.add(pluviosidadeVerao());
+			PO.add(pluviosidadeOutono());
 		}
-		System.out.println(TI);
-		System.out.println(TP);
-		System.out.println(TV);
-		System.out.println(TO);
+		System.out.println(PI);
+		System.out.println(PP);
+		System.out.println(PV);
+		System.out.println(PO);
 
-	/*			FileOutputStream fos = new FileOutputStream("temperatura.csv", true);
+	/*			FileOutputStream fos = new FileOutputStream("pluviosidade.csv", true);
 
 		PrintWriter pw = new PrintWriter(fos);
 
-		pw.println("temperatura Inverno; temperatura Primavera; temperatura Verão; temperatura Outono");
+		pw.println("pluviosidade Inverno; pluviosidade Primavera; pluviosidade Verão; pluviosidade Outono");
 		for(int i =0; i< 1000; i++)
-			pw.println(TI.get(i)+ "; "+ TP.get(i) + "; "+ TV.get(i) + "; "+ TO.get(i));
+			pw.println(PI.get(i)+ "; "+ PP.get(i) + "; "+ PV.get(i) + "; "+ PO.get(i));
 
 		pw.close();*/
 
