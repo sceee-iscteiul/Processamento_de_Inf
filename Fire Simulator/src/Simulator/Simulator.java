@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,11 +20,19 @@ public class Simulator implements Observer {
 	private static final int max_y=10;
 	private List<FireSimulatorObject> objects = new ArrayList<FireSimulatorObject>();
 	private static int time_controller= 0; //Control of tick 
+	private Season season;
+	private double temperatura;
+	private double vento;
+	private double humidade;
+	private double precipitacao;
+	private double pluviosidade;
 	
 	private Simulator() {
 		INSTANCE=this;
 		ImageMatrixGUI.setSize(max_x, max_y);
 		load();
+		season = Season.INVERNO;
+		updateRandomVariable();
 	}
 	
 	private void load() {
@@ -95,6 +104,15 @@ public class Simulator implements Observer {
 			a.update();
 	}
 	
+	public void updateRandomVariable() {
+		Map<String, Double> random_vraiable = RandomVariable.updateRandomVariable(season);
+		temperatura = random_vraiable.get(RandomVariable.TEMPERATURA);
+		vento = random_vraiable.get(RandomVariable.VENTO);
+		humidade = random_vraiable.get(RandomVariable.HUMIDADE);
+		precipitacao = random_vraiable.get(RandomVariable.PRECIPITACAO);
+		pluviosidade = random_vraiable.get(RandomVariable.PLUVIOSIDADE);
+	}
+	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -103,16 +121,16 @@ public class Simulator implements Observer {
 		 updateFireSimulatorObject();
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
 		 addFireSimulatorObject(new Rain(new Point2D((int)(Math.random()*max_x),0)));
+		 ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+temperatura+"º"+"   vento: "+vento+"   humidade: "+humidade+"   estação: "+season);
 		if(time_controller%20 ==0){
 			//actualiza variaveis aleatórias
 			System.out.println("actualiza variaveis aleatórias "+ time_controller);
-			ImageMatrixGUI.getInstance().setStatusMessage("temperatura: "+geraTemperatura()+"º"+"         vento 50km/h ");
+			updateRandomVariable();
 			
 		} if(time_controller % 80 ==0) {
 			//codigo para actualizar estação do ano
-			System.out.println("codigo para actualizar estação do ano "+ time_controller);
-			 
-		 
+			season = Season.updateSeason(season);
+			System.out.println("Season: "+ season); 
 		}
 		
 		 ImageMatrixGUI.getInstance().update();
