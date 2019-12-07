@@ -327,6 +327,13 @@ public class RandomVariable {
 		}
 	}
 	
+	public static int right_left() {
+		double U = Math.random();
+		if(U <0.5)
+			return 1;
+		else return -1;
+	}
+	
 	
 	public static Map<String, Double> updateRandomVariable(Season season){
 		Map<String, Double> resul = new HashMap<String, Double>();
